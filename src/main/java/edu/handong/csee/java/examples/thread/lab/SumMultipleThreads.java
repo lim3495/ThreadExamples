@@ -6,7 +6,7 @@ public class SumMultipleThreads implements Runnable{
 
 	long from, to, totalSum;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 
 		long to = 10000000;
 		ArrayList<SumMultipleThreads> sumRunners = new ArrayList<SumMultipleThreads>();
@@ -30,8 +30,9 @@ public class SumMultipleThreads implements Runnable{
 
 		for(SumMultipleThreads runner:sumRunners) {
 			Thread thread = new Thread(runner);
-			thread.start();
-			threadsForSubSum.add(thread);
+			thread.start(); // from에서 to 까
+			thread.join(1000); // 앞의 thread가 종료될 때 까지 기다려주
+			threadsForSubSum.add(thread); // 마지막에 add 시켜주
 		}
 
 		long grandTotal = 0;
